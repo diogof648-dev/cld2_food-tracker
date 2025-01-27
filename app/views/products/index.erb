@@ -1,0 +1,33 @@
+<div class="w-8/12 mx-auto bg-white shadow-md mt-10 p-4 rounded-md block">
+    <a href="/products/new" class="bg-green-500 text-white p-2 rounded-md float-right mb-10">+ Nouveau produit</a>
+
+    <% if @products.empty? %>
+    <p class="text-center my-10">Aucun produit répertorié</p>
+    <% else %>
+
+    <table class="w-full table-fixed">
+        <tbody class="divide-y divide-gray-100">
+            <% @products.each do |p| %>
+            <tr>
+                <td><%= p.name %> (<%= p.kcal %> kcal)</td>
+                <td><%= p.product_type.name %></td>
+                <td class="text-sm text-gray-300">
+                    <ul>
+                        <li>Glucides - <%= p.carbohydrates %>g</li>
+                        <li>Protéines - <%= p.proteins %>g</li>
+                        <li>Lipides - <%= p.fat %>g</li>
+                    </ul>
+                </td>
+                <td>
+                    <form action="/products/<%= p.id %>" method="post" class="float-right">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="bg-red-500 p-2 rounded-md text-white"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <% end %>
+</div>
