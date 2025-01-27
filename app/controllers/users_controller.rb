@@ -20,7 +20,7 @@ get '/register' do
 end
 
 post '/register' do
-  if register_user(params[:name], params[:email], params[:password], session)
+  if register_user(params[:firstname], params[:lastname], params[:email], params[:password], session)
     redirect '/login'
   else
     redirect '/register'
@@ -49,7 +49,7 @@ def check_login(email, password, session)
   false
 end
 
-def register_user(name, email, password, session)
+def register_user(firstname, lastname, email, password, session)
   unless ValidateEmail.valid?(email)
     session[:error] = 'Un problème est survenu, veuillez essayer plus tard'
     return false
@@ -58,7 +58,8 @@ def register_user(name, email, password, session)
   current_date = Time.now.strftime('%Y-%m-%d %H:%M')
 
   true if User.create(
-    name: name,
+    firstname: firstname,
+    lastname: lastname,
     email: email,
     password_digest: BCrypt::Password.create(password),
     created_at: current_date,
