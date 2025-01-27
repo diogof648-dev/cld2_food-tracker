@@ -1,0 +1,43 @@
+<div class="w-8/12 mx-auto bg-white shadow-md mt-10 p-4 rounded-md block">
+    <h1 class="text-center text-xl">Nouveau produit</h1>
+
+    <form action="/products" method="post" class="mt-10 w-10/12 mx-auto">
+        <div class="flex space-x-2">
+            <div class="flex-1">
+                <label for="name">Nom</label>
+                <input type="text" name="name" id="name" class="w-full p-2 border border-black rounded-md" required>
+            </div>
+            <div class="flex-1">
+                <label for="product_type">Type de produit</label>
+                <select name="product_type" id="product_type" class="w-full p-2 border border-black rounded-md" required>
+                    <% @product_types.each do |p| %>
+                    <option value="<%= p.id %>"><%= p.name %></option>
+                    <% end %>
+                </select>
+            </div>
+        </div>
+
+        <hr class="w-full h-px bg-gray-100 my-10">
+
+        <div class="flex space-x-2">
+            <div class="kcal">
+                <label for="kcal">kcal</label>
+                <input type="number" name="kcal" id="kcal" class="w-full mb-4 p-2 border border-black rounded-md" required>
+            </div>
+            <div class="kcal">
+                <label for="carbohydrates">Glucides</label>
+                <input type="number" name="carbohydrates" id="carbohydrates" class="w-full mb-4 p-2 border border-black rounded-md" required>
+            </div>
+            <div class="kcal">
+                <label for="proteins">Protéines</label>
+                <input type="number" name="proteins" id="proteins" class="w-full mb-4 p-2 border border-black rounded-md" required>
+            </div>
+            <div class="kcal">
+                <label for="fat">Matières grasses</label>
+                <input type="number" name="fat" id="fat" class="w-full mb-4 p-2 border border-black rounded-md" required>
+            </div>
+        </div>
+
+        <input type="submit" value="Créer" class="text-white bg-green-500 p-2 px-10 mt-5 rounded-md">
+    </form>
+</div>
