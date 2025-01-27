@@ -23,6 +23,10 @@ Dir[File.join(CONTROLLERS_FOLDER, '*.rb')].sort.each { |file| require file }
 Dir[File.join(MODELS_FOLDER, '*.rb')].sort.each { |file| require file }
 Dir[File.join(MIDDLEWARES_FOLDER, '*.rb')].sort.each { |file| require file }
 
+get '/' do
+  'Hello!'
+end
+
 configure do
   enable :sessions
 end
