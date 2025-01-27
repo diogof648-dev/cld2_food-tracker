@@ -9,15 +9,7 @@ class DBConnection
 
   def initialize
     @environment = ENV['RACK_ENV'] || 'development'
-    connect_mongoid
     connect_mariadb
-  end
-
-  def connect_mongoid
-    Mongoid.load!('config/mongoid.yml', @environment.to_sym)
-    $logger.info('MongoDB successfully connected')
-  rescue StandardError => e
-    $logger.error("MongoDB connection error: #{e.message}")
   end
 
   def connect_mariadb
