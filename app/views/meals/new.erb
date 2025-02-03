@@ -1,0 +1,79 @@
+<div class="w-8/12 mx-auto bg-white shadow-md mt-10 p-4 rounded-md block">
+    <form action="/meals" method="post" onsubmit="return checkCheckboxes()">
+        <div class="flex space-x-4">
+            <div class="flex-1">
+                <label for="meal_type">Quand ?</label>
+                <select name="meal_type" id="meal_type" class="w-full p-2 border border-black rounded-md" required>
+                    <% @meal_types.each do |mt| %>
+                    <option value="<%=mt.id%>"><%=mt.name%></option>
+                    <% end %>
+                </select>
+            </div>
+
+            <div class="flex-1">
+                <input type="submit" value="Créer" class="w-full h-full bg-green-500 text-white rounded-md">
+            </div>
+        </div>
+
+        <hr class="w-full h-px bg-gray-100 my-10">
+
+        <label>Produits consommés</label>
+        <input type="text" id="search_product" class="w-full p-2 border border-black rounded-md" placeholder="Rechercher le produit...">
+        <div class="products">
+            <table id="products" class="w-8/12 mx-auto divide-y divide-gray-100 mt-5 table-fixed">
+                <% @products.each do |p| %>
+                <tr class="py-2">
+                    <td><%= p.name %></td>
+                    <td class="text-center">
+                        <input type="number" name="products[<%= p.id %>][portion]" id="portion_<%= p.id %>" class="w-full p-2 border border-black rounded-md" placeholder="Portion en grammes">
+                    </td>
+                    <td class="text-right">
+                        <input type="checkbox" name="products[<%= p.id %>][check]" id="check_<%= p.id %>" class="w-6 h-6" onclick="toggleRequired(<%= p.id %>)">
+                    </td>
+                </tr>
+                <% end %>
+            </table>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById("search_product").addEventListener("keyup", function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#products tr");
+
+            rows.forEach(row => {
+                let text = row.textContent.toLowerCase();
+                row.classList.toggle("hidden", !text.includes(filter));
+            });
+        });
+
+        function toggleRequired(productId) {
+            const checkbox = document.getElementById(`check_${productId}`);
+            const inputNumber = document.getElementById(`portion_${productId}`);
+            
+            if (checkbox.checked) {
+                inputNumber.setAttribute('required', true);
+            } else {
+                inputNumber.removeAttribute('required');
+            }
+        }
+
+        function checkCheckboxes() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            let isChecked = false;
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    isChecked = true;
+                }
+            });
+
+            if (!isChecked) {
+                alert('Veuillez sélectionner au moins un aliment.');
+                return false; // Empêche la soumission du formulaire
+            }
+            
+            return true; // Permet la soumission du formulaire
+        }
+    </script>
+</div>

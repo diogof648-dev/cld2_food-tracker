@@ -1,0 +1,29 @@
+<div class="w-8/12 mx-auto bg-white shadow-md mt-10 p-4 rounded-md block">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <h1 class="text-2xl text-center mb-10">Tracking calories</h1>
+
+    <div>
+        <canvas id="kcal"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('kcal');
+        const data = {
+            labels: <%= @dates %>,
+            datasets: [{
+                label: 'calories consommées',
+                data: <%= @kcals %>,
+                fill: true,
+                borderColor: 'rgb(43, 127, 255)',
+                tension: 0.1
+            }]
+        };
+
+        new Chart(ctx, {
+            type: 'line',
+            data: data
+        });
+    </script>
+ 
+</div>
