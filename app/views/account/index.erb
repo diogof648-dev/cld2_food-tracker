@@ -1,0 +1,63 @@
+<div class="login w-8/12 mx-auto mt-12 bg-white p-4 rounded-md">
+    <h1 class="text-center text-2xl mb-5">Votre compte</h1>
+
+    <div class="flex space-x-2">
+        <div class="flex-1">
+            <form action="/account" method="post" class="flex-1">
+                <input type="hidden" name="_method" value="PATCH">
+                <fieldset class="border border-gray-300 px-6 py-2 rounded-md">
+                    <legend class="px-2">Vos informations personnelles</legend>
+                    <label for="lastname">Nom</label>
+                    <input type="text" name="lastname" id="lastname" placeholder="Doe" class="w-full mb-4 p-2 border border-black rounded-md" value="<%= @user.lastname %>" required>
+
+                    <label for="firstname">Prénom</label>
+                    <input type="text" name="firstname" id="firstname" placeholder="John" class="w-full mb-4 p-2 border border-black rounded-md" value="<%= @user.firstname %>" required>
+                    
+                    <input type="submit" value="Mettre à jour" class="w-full py-2 bg-blue-500 text-white rounded-md">
+                </fieldset>
+            </form>
+        </div>
+        
+        <div class="flex-1">
+            <form action="/account" method="post">
+                <input type="hidden" name="_method" value="PATCH">
+                <fieldset class="border border-gray-300 px-6 py-2 rounded-md">
+                    <legend>Informations du compte</legend>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="john@doe.com" pattern="[\w.-]+@([\w-]+\.)+[\w-]{2,4}" class="w-full mb-4 p-2 border border-black rounded-md" value="<%= @user.email %>" required>
+
+                    <label for="password-current">Mot de passe actuel</label>
+                    <input type="password" name="password_current" id="password_current" class="w-full mb-4 p-2 border border-black rounded-md" required>
+
+                    <label for="password-new">Nouveau mot de passe</label>
+                    <input type="password" name="password_new" id="password_new" class="w-full mb-4 p-2 border border-black rounded-md" required>
+
+                    <label for="password-validation">Validation mot de passe</label>
+                    <input type="password" name="password_validation" id="password_validation" class="w-full p-2 border border-black rounded-md" required>
+                    
+                    <p class="my-4 text-sm text-red-500">Attention, vous serez déconnecté et redirigé vers la page de connexion !</p>
+
+                    <input type="submit" value="Mettre à jour" class="w-full py-2 bg-blue-500 text-white rounded-md">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const passwordNew = document.getElementById('password_new')
+        const passwordValidation = document.getElementById('password_validation')
+
+        function validatePasswords() {
+            if (passwordNew.value != passwordValidation.value) {
+                passwordNew.classList.add('border-red-500', 'focus:border-red-500', 'focus:border-2', 'focus:outline-none')
+                passwordValidation.classList.add('border-red-500', 'focus:border-red-500', 'focus:border-2', 'focus:outline-none')
+            } else {
+                passwordNew.classList.remove('border-red-500', 'focus:border-red-500', 'focus:border-2', 'focus:outline-none')
+                passwordValidation.classList.remove('border-red-500', 'focus:border-red-500', 'focus:border-2', 'focus:outline-none')
+            }
+        }
+
+        passwordNew.addEventListener('keyup', validatePasswords)
+        passwordValidation.addEventListener('keyup', validatePasswords)
+    </script>
+</div>

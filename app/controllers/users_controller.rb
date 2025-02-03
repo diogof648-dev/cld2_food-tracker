@@ -27,6 +27,61 @@ post '/register' do
   end
 end
 
+get '/account' do
+  @user = User.find_by(id: session[:user_id])
+
+  erb :"account/index"
+end
+
+patch '/account' do
+  @user = User.find_by(id: session[:user_id])
+
+  if params.key?(:email)
+    if BCrypt::Password.new(@user.password_digest) != params[:password_current]
+      session[:error] = "Le mot de passe actuel que vous avez rentré n'est pas correct."
+      redirect '/account'
+    end
+
+    if params[:password_new] == params[:password_validation]
+      @user.update(
+        email: params[:email],
+        password_digest: BCrypt::Password.create(params[:password_new])
+      )
+
+      session.clear
+      redirect '/account'
+    end
+  end
+
+  if params.key?(:firstname)
+    @user.update(
+      firstname: params[:firstname],
+      lastname: params[:lastname]
+    )
+
+    session[:user_name] = "#{@user.firstname} #{@user.lastname}"
+    redirect '/account'
+  end
+end
+
+get '/weight' do
+  @weights = Weight.where(user_id: session[:user_id]).order(:date)
+  @dates = @weights.map { |meal| meal.date.to_s }
+  @weights = @weights.map(&:weight)
+
+  erb :"weight/index"
+end
+
+post '/weight' do
+  Weight.create(
+    weight: params[:weight],
+    date: Date.today,
+    user_id: session[:user_id]
+  )
+
+  redirect '/weight'
+end
+
 get '/logout' do
   session.clear
   redirect '/login'
@@ -42,6 +97,7 @@ def check_login(email, password, session)
 
   if !error && BCrypt::Password.new(@user.password_digest) == password
     session[:user_id] = @user.id
+    session[:user_name] = "#{@user.firstname} #{@user.lastname}"
     return true
   end
 
