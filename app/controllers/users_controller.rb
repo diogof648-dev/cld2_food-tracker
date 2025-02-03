@@ -64,6 +64,24 @@ patch '/account' do
   end
 end
 
+get '/weight' do
+  @weights = Weight.where(user_id: session[:user_id]).order(:date)
+  @dates = @weights.map { |meal| meal.date.to_s }
+  @weights = @weights.map(&:weight)
+
+  erb :"weight/index"
+end
+
+post '/weight' do
+  Weight.create(
+    weight: params[:weight],
+    date: Date.today,
+    user_id: session[:user_id]
+  )
+
+  redirect '/weight'
+end
+
 get '/logout' do
   session.clear
   redirect '/login'
