@@ -8,14 +8,30 @@
     <script src="https://kit.fontawesome.com/d8302aa554.js" crossorigin="anonymous"></script>
 </head>
 <body class="bg-gray-100">
-    <div class="w-full bg-white py-2 shadow-md">
-        <div class="w-3/4 mx-auto flex">
-            <h1>CLD2 - Food Tracker</h1>
+    <div class="w-full bg-white shadow-md">
+        <div class="w-3/4 mx-auto flex justify-between items-center">
+            <h1 class="py-2">CLD2 - Food Tracker</h1>
 
             <% if session[:user_id] %>
-            <div class="links flex ml-52 space-x-4">
+            <div class="links flex space-x-4">
                 <a href="/">Accueil</a>
                 <a href="/products">Produits</a>
+            </div>
+
+            <div class="relative inline-block text-left">
+                <div class="cursor-pointer">
+                    <p class="w-full justify-center bg-white px-3 py-2 hover:bg-gray-50 cursor-pointer" id="menu-button">
+                        <%= session[:user_name] %>
+                        <i class="fa-solid fa-chevron-down ml-2"></i>
+                    </p>
+                </div>
+
+                <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5 focus:outline-hidden" id="menu">
+                    <div class="py-1">
+                        <a href="/account" class="block px-4 py-2 hover:bg-gray-50">Compte</a>
+                        <a href="/logout" class="block px-4 py-2 hover:bg-gray-50">Déconnexion</a>
+                    </div>
+                </div>
             </div>
             <% end %>
         </div>
@@ -24,5 +40,18 @@
     <div class="content">
         <%= yield %>
     </div>
+
+    <script>
+        const menubtn = document.getElementById('menu-button');
+        const menu = document.getElementById('menu');
+
+        menubtn.addEventListener('click', function () {
+            if (menu.classList.contains('block')) {
+                menu.classList.replace('block', 'hidden');
+            } else if (menu.classList.contains('hidden')) {
+                menu.classList.replace('hidden', 'block');
+            }
+        })
+    </script>
 </body>
 </html>
