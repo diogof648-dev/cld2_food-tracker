@@ -1,0 +1,48 @@
+<div class="w-8/12 mx-auto bg-white shadow-md mt-10 p-4 rounded-md block">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <h1 class="text-2xl text-center mb-6">Tracking de votre poids</h1>
+
+    <button id="weight-add-btn" class="border-none bg-green-500 text-white w-full py-2 rounded-md">+ Ajouter une nouvelle entrée</button>
+
+    <div>
+        <canvas id="weights"></canvas>
+    </div>
+
+    <dialog id="weight-add" class="p-4 rounded-md">
+        <h1 class="text-2xl text-center mb-8">Ajouter une nouvelle entrée</h1>
+        <form action="/weight" method="post">
+            <label for="weight" class="mb-2">Votre poids aujourd'hui ?</label>
+            <input type="number" name="weight" id="weight" class="w-full mb-4 p-2 border border-black rounded-md">
+            <input type="submit" value="Ajouter" class="w-full py-2 bg-blue-500 text-white rounded-md">
+        </form>
+    </dialog>
+
+    <script>
+        const ctx = document.getElementById('weights');
+        const data = {
+            labels: <%= @dates %>,
+            datasets: [{
+                label: 'Historique de poids',
+                data: <%= @weights %>,
+                fill: true,
+                borderColor: 'rgb(43, 127, 255)',
+                tension: 0.1
+            }]
+        };
+
+        new Chart(ctx, {
+            type: 'line',
+            data: data
+        });
+
+        const weightAddBtn = document.getElementById('weight-add-btn')
+        const weightAddDialog = document.getElementById('weight-add')
+
+        weightAddBtn.addEventListener('click', () => {
+            weightAddDialog.showModal()
+        })
+
+    </script>
+ 
+</div>
