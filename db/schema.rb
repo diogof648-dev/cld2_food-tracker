@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_21_130801) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_03_105612) do
   create_table "meal_types", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.index ["name"], name: "index_meal_types_on_name", unique: true
@@ -54,5 +54,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_21_130801) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  create_table "weights", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.integer "weight", null: false
+    t.date "date", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_weights_on_user_id"
   end
 end
