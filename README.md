@@ -2,7 +2,7 @@
 
 ## Description
 
-Ce project consiste à créer une application de tracking alimentaire. Le projet est basé sur la structure du projet suivant : https://github.com/CPNV-ES/nos1_ddj.git
+Ce project consiste à créer une application de tracking alimentaire durant le module CLD2. Le projet est basé sur la structure du projet suivant : https://github.com/CPNV-ES/nos1_ddj.git
 
 ## Mise en route
 
