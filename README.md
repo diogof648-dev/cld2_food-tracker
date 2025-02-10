@@ -1,8 +1,8 @@
-# NOS1-DDJ
+# CLD2 - FOOD TRACKER
 
 ## Description
 
-Ce projet consiste à crée une application ruby avec sinatra pour gérer des utilisateurs avec MySQL et des documents avec mongodb.
+Ce project consiste à créer une application de tracking alimentaire. Le projet est basé sur la structure du projet suivant : https://github.com/CPNV-ES/nos1_ddj.git
 
 ## Mise en route
 
@@ -38,8 +38,8 @@ Dans ce projet, nous avons utilisé Visual Studio Code comme IDE principal.
 1. Cloner le dépôt git
 
 ```bash
-git clone https://github.com/CPNV-ES/nos1_ddj.git
-cd nos1_ddj
+git clone https://github.com/diogof648-dev/cld2_food-tracker.git
+cd cld2_food-tracker
 ```
 
 2. Setup la branche `main` et initialiser Git Flow pour le projet
@@ -50,14 +50,12 @@ git switch main
 git flow init
 ```
 
-3. Mise en place de la base de données et des fichiers de configuration
+3. Mise en place de la base de données et du fichier de configuration
 
-> Créer les fichiers de configuration pour MySQL et MongoDB et modifier le nom des fichiers
+> Créer le fichier de configuration pour MariaDB et modifier le nom du fichier
 
 ```bash
 cp config/database.example.yml config/database.yml
-
-cp config/mongoid.example.yml config/mongoid.yml
 ```
 
 4. Installer les dépendances de MariaDB/MySQL
@@ -77,11 +75,7 @@ sudo apt install ruby-dev
 sudo apt install libmariadb-dev
 ```
 
-5. Installer les dépendances de MongoDB
-
-> Voir ce document : [Guide installation MongoDB](docs/mongodb_install.md)
-
-6. Installer les gems du projet
+5. Installer les gems du projet
 
 ```bash
 gem install bundler
@@ -89,7 +83,7 @@ gem install bundler
 bundle install
 ```
 
-7. Base de données
+6. Base de données
 
    1. Créer et migrer la base de données SQL
 
@@ -105,7 +99,7 @@ bundle install
    sudo systemctl start mongod
    ```
 
-8. Lancer le serveur Ruby
+7. Lancer le serveur Ruby
 
 ```bash
 rerun app.rb
@@ -122,36 +116,39 @@ rerun app.rb
 ## Structure des répertoires
 
 ```bash
-./nos1_ddj
+./cld2_food-tracker
 ├── app
 │   ├── controllers                     # Controllers
-│   │   ├── documents_controller.rb
+│   │   ├── meals_controller.rb
+│   │   ├── products_controller.rb
 │   │   └── users_controller.rb
 │   ├── middlewares                     # Middlewares
 │   │   └── auth.rb
 │   ├── models                          # Models
-│   │   ├── document.rb
-│   │   └── user.rb
+│   │   ├── meal_type.rb
+│   │   ├── meal.rb
+│   │   ├── product_type.rb
+│   │   ├── product.rb
+│   │   ├── user.rb
+│   │   └── weight.rb
 │   ├── services                        # Services
 │   │   └── db_connection.rb
 │   └── views                           # Views
-│       ├── documents
+│       ├── account
 │       ├── login
+│       ├── meals
+│       ├── products
 │       ├── register
+│       ├── weight
 │       └── layout.erb
 ├── app.rb                              # Point d'entrée de l'application
 ├── config                              # Configuration
 │   ├── database.example.yml
 │   ├── irb.rb
-│   ├── logger.rb
-│   └── mongoid.example.yml
+│   └── logger.rb
 ├── db                                  # Database
 │   ├── migrate                         # Migration
 │   └── schema.rb
-├── docs                                # Documentation
-│   ├── CDC_NoSQL_projet.pdf
-│   ├── database.md
-│   └── mongodb_install.md
 ├── logs                                # Logs
 │   └── 2025-xx-xx.log
 ├── Gemfile
@@ -177,6 +174,4 @@ rerun app.rb
 
 ## Contact
 
-- David : <david.dieperink@eduvaud.ch>, [GitHub](https://github.com/dieperid)
-- Julien : <julien.schneider@eduvaud.ch>, [GitHub](https://github.com/T5uy0)
 - Diogo : <diogosilvafernandes85@gmail.com>, [GitHub](https://github.com/diogof648-dev)
