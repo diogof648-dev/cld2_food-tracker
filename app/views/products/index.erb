@@ -9,6 +9,11 @@
         <tbody class="divide-y divide-gray-100">
             <% @products.each do |p| %>
             <tr>
+                <td>
+                    <% if !p.image.nil? %>
+                    <img src="/<%=p.image.delete_prefix('public/')%>" alt="" class="h-[50px]">
+                    <% end %>
+                </td>
                 <td><%= p.name %> (<%= p.kcal %> kcal)</td>
                 <td><%= p.product_type.name %></td>
                 <td class="text-sm text-gray-300">
@@ -19,10 +24,15 @@
                     </ul>
                 </td>
                 <td>
-                    <form action="/products/<%= p.id %>" method="post" class="float-right">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="bg-red-500 p-2 rounded-md text-white"><i class="fa-solid fa-trash"></i></button>
-                    </form>
+                    <div class="float-right flex space-x-2">
+                        <a href="/products/<%=p.id%>/edit" class="bg-orange-500 p-2 rounded-md text-white">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <form action="/products/<%= p.id %>" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="bg-red-500 p-2 rounded-md text-white"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             <% end %>

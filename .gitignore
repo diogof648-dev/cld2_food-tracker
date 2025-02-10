@@ -189,3 +189,6 @@ files
 
 #Mac
 .DS_Store
+
+# Public folder and its subfolders
+public/*
