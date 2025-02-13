@@ -12,11 +12,13 @@ require 'sinatra/activerecord'
 require 'dotenv/load'
 require "#{CONFIG_FOLDER}/logger"
 require "#{SERVICE_FOLDER}/db_connection"
+require "#{SERVICE_FOLDER}/s3_connection"
 require 'fileutils'
 
 set :environment, ENV.fetch('RACK_ENV') || 'development'
 set :views, File.join(VIEWS_FOLDER)
 set :logger, $logger
+set :bucket, $bucket
 
 DBConnection.instance
 

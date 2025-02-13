@@ -13,8 +13,13 @@ class DBConnection
   end
 
   def connect_mariadb
-    db_config = YAML.load_file('config/database.yml')[@environment]
-    ActiveRecord::Base.establish_connection(db_config)
+    ActiveRecord::Base.establish_connection(
+      adapter: 'mysql2',
+      host: ENV['DB_HOST'],
+      username: ENV['DB_USER'],
+      password: ENV['DB_PASSWORD'],
+      database: ENV['DB_DATABASE']
+    )
     $logger.info('MariaDB successfully connected')
   rescue ActiveRecord::ActiveRecordError => e
     $logger.error("MariaDB connection error: #{e.message}")
