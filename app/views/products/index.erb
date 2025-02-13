@@ -11,7 +11,7 @@
             <tr>
                 <td>
                     <% if !p.image.nil? %>
-                    <img src="/<%=p.image.delete_prefix('public/')%>" alt="" class="h-[50px]">
+                    <img src="<%=p.image%>" alt="" class="h-[50px]">
                     <% end %>
                 </td>
                 <td><%= p.name %> (<%= p.kcal %> kcal)</td>
