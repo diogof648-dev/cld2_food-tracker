@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'activerecord'
+gem 'aws-sdk-s3'
 gem 'bcrypt'
 gem 'dotenv'
 gem 'mysql2'
