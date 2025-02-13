@@ -42,7 +42,7 @@ end
 #######################################
 
 def store_product(params)
-  image_path = store_image(params[:image])
+  image_path = store_image(params[:image], params[:name])
 
   true if Product.create(
     name: params[:name],
@@ -57,9 +57,7 @@ end
 
 def update_product(id, params)
   product = Product.find_by(id: id)
-  image_path = store_image(params[:image])
-
-  puts image_path = product.image if image_path.nil?
+  image_path = store_image(params[:image], product.name)
 
   true if product.update(
     name: params[:name],
@@ -72,19 +70,17 @@ def update_product(id, params)
   )
 end
 
-def store_image(image)
-  puts image
+def store_image(image, name)
   return nil if image.nil? || !image.is_a?(Sinatra::IndifferentHash) || !image[:type].start_with?('image/')
 
   FileUtils.mkdir_p('public/images') unless Dir.exist?('public/images')
 
   unless image.nil?
     image_type = image[:type].delete_prefix('image/')
-    image_name = "product_#{Dir.entries('public/images').size}.#{image_type}"
-    tempfile = image[:tempfile]
-    final_path = "public/images/#{image_name}"
-    FileUtils.cp(tempfile.path, final_path)
+    image_name = "product_#{name}.#{image_type}"
+    object = $bucket.object(image_name)
+    object.upload_file(image[:tempfile].path)
   end
 
-  final_path
+  object.public_url
 end
