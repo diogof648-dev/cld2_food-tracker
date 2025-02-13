@@ -5,10 +5,13 @@ require 'sinatra/activerecord'
 require 'active_record'
 require 'mongoid'
 
-db_config = YAML.load_file('config/database.yml')
-ActiveRecord::Base.establish_connection(db_config['development'])
-
-Mongoid.load!('config/mongoid.yml', :development)
+ActiveRecord::Base.establish_connectionActiveRecord::Base.establish_connection(
+  adapter: 'mysql2',
+  host: ENV['DB_HOST'],
+  username: ENV['DB_USER'],
+  password: ENV['DB_PASSWORD'],
+  database: ENV['DB_DATABSE']
+)
 
 # Load all models
 Dir['./app/models/*.rb'].sort.each { |file| require file }
