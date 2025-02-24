@@ -21,4 +21,6 @@ ActiveRecord::Base.configurations = {
     database: ENV['DB_DATABASE']
   }
 }
-ActiveRecord::Base.establish_connection(:development)
+
+env = ENV['RACK_ENV'] || 'development'
+ActiveRecord::Base.establish_connection(env)
