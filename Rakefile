@@ -11,6 +11,14 @@ ActiveRecord::Base.configurations = {
     username: ENV['DB_USER'],
     password: ENV['DB_PASSWORD'],
     database: ENV['DB_DATABASE']
+  },
+  'production' => {
+    adapter: 'mysql2',
+    host: ENV['DB_HOST'],
+    port: ENV['DB_PORT'],
+    username: ENV['DB_USER'],
+    password: ENV['DB_PASSWORD'],
+    database: ENV['DB_DATABASE']
   }
 }
 ActiveRecord::Base.establish_connection(:development)
