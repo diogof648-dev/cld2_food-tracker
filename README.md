@@ -50,12 +50,12 @@ git switch main
 git flow init
 ```
 
-3. Mise en place de la base de données et du fichier de configuration
+3. Mise en place des variables d'environnement
 
 > Créer le fichier de configuration pour MariaDB et modifier le nom du fichier
 
 ```bash
-cp config/database.example.yml config/database.yml
+cp .env.example .env
 ```
 
 4. Installer les dépendances de MariaDB/MySQL
@@ -93,12 +93,6 @@ bundle install
    bundle exec rake db:migrate
    ```
 
-   2. Démarrer mongodb
-
-   ```bash
-   sudo systemctl start mongod
-   ```
-
 7. Lancer le serveur Ruby
 
 ```bash
@@ -132,7 +126,8 @@ rerun app.rb
 │   │   ├── user.rb
 │   │   └── weight.rb
 │   ├── services                        # Services
-│   │   └── db_connection.rb
+│   │   ├── db_connection.rb
+│   │   └── s3_connection.rb
 │   └── views                           # Views
 │       ├── account
 │       ├── login
@@ -143,7 +138,6 @@ rerun app.rb
 │       └── layout.erb
 ├── app.rb                              # Point d'entrée de l'application
 ├── config                              # Configuration
-│   ├── database.example.yml
 │   ├── irb.rb
 │   └── logger.rb
 ├── db                                  # Database
